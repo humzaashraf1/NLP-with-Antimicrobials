@@ -19,7 +19,7 @@ A sigmoid layer that decides which values to update and a tanh layer that create
 
 **Output Gate**: Determines the next hidden state based on the updated cell state and the current input.
 
-<img src="https://github.com/humzaashraf1/NLP-with-Antimicrobials/assets/121640997/3ae2fa3a-c8cb-4ea3-a1b7-5e7ba150fea0" alt="LSTM" width="500" height="200">
+<img src="https://github.com/humzaashraf1/NLP-with-Antimicrobials/assets/121640997/3ae2fa3a-c8cb-4ea3-a1b7-5e7ba150fea0" alt="LSTM" width="550" height="200">
 
 Graphic courtesey of StatQuest (https://statquest.org/) 
 

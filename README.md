@@ -19,7 +19,8 @@ A sigmoid layer that decides which values to update and a tanh layer that create
 
 **Output Gate**: Determines the next hidden state based on the updated cell state and the current input.
 
-![Untitled](https://github.com/humzaashraf1/NLP-with-Antimicrobials/assets/121640997/6a494cba-ab46-4a9e-afe1-5dfd201a41e4)  
+<img src="https://github.com/humzaashraf1/NLP-with-Antimicrobials/assets/121640997/3ae2fa3a-c8cb-4ea3-a1b7-5e7ba150fea0" alt="LSTM" width="500" height="200">
+
 Graphic courtesey of StatQuest (https://statquest.org/) 
 
 ### Implementing LSTM for Classification:
@@ -46,7 +47,8 @@ BERT is a powerful natural language processing (NLP) model introduced by researc
 
 **Contextualized Representations**: The output of the transformer layers is a set of contextualized representations for each token in the input sequence. These representations capture the contextual information of each token within the context of the entire sentence. 
 
-![image](https://github.com/humzaashraf1/NLP-with-Antimicrobials/assets/121640997/a9e88acc-fa13-4ce1-af24-462af17be916)  
+<img src="https://github.com/humzaashraf1/NLP-with-Antimicrobials/assets/121640997/57da8e73-5753-4b7f-b53b-101fd62c5ff6" alt="Transformer" width="400" height="400">  
+
 Graphic courtesey of StatQuest (https://statquest.org/)
 
 ### Implementing BERT for Classification:  
@@ -63,9 +65,9 @@ Ground truth: [0 1], where the left-side class is AMP and the right-side class i
 t-SNE is a dimensionality reduction technique that allows n-dimensional vectors to be projected down into 2-dimensional space based on relative similarity in high-dimensional space. Since BERT essentially produces high dimensional embedding vectors, we can visualize "similarity" between peptide sequences by comparing the relative distances between data points in the projected space.    
 
 **BERT Before Fine Tuning**  
-<img src="https://github.com/humzaashraf1/NLP-with-Antimicrobials/assets/121640997/204a432f-4a69-458f-bdad-bb71ca86ab23" alt="tSNE Before Fine Tuning" width="500" height="400">  
+<img src="https://github.com/humzaashraf1/NLP-with-Antimicrobials/assets/121640997/c7f4333c-4dfa-4c5e-a45f-c8d5e0c75b2f" alt="tSNE Before Fine Tuning" width="400" height="300">  
 **BERT After Fine Tuning**  
-<img src="https://github.com/humzaashraf1/NLP-with-Antimicrobials/assets/121640997/e9748a8d-f351-4874-a66e-53d8a0408b23" alt="tSNE Before Fine Tuning" width="500" height="400">  
+<img src="https://github.com/humzaashraf1/NLP-with-Antimicrobials/assets/121640997/975fdda8-1662-49fc-b062-9c1e36c4c0fc" alt="tSNE Before Fine Tuning" width="400" height="300">  
 As can be seen in the above scatter plots, fine tuning the pre-trained model increased the separation between embeddings in both the training and testing sets, suggesting our training was successful!
 
 

@@ -52,7 +52,7 @@ BERT is a powerful natural language processing (NLP) model introduced by researc
 Graphic courtesey of StatQuest (https://statquest.org/)
 
 ### Implementing BERT for Classification:  
-BERT was able to achieve ~88% accuracy for classifying peptide sequences as AMPs vs. non-AMPs on an evaluation set. While this is a relatively minor improvement compared to LSTM, the BERT model has greater sequence context, which we can visualize with dimensionality reduction. Model parameters were saved along with the notebook under <ins>**BERT_AMP_Classification**</ins>.
+BERT was able to achieve ~88% accuracy for classifying peptide sequences as AMPs vs. non-AMPs on an evaluation set. While this is a relatively minor improvement compared to LSTM, the BERT model has greater sequence context, which we can visualize with dimensionality reduction. Model parameters were not saved due to storage constraints, but the .pth file can be easily generated on Google Colab. All code is located within <ins>**BERT_AMP_Classification**</ins>.
 
 **Example Usage**  
 From the command line:  

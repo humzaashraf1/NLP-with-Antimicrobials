@@ -47,7 +47,7 @@ BERT is a powerful natural language processing (NLP) model introduced by researc
 
 **Contextualized Representations**: The output of the transformer layers is a set of contextualized representations for each token in the input sequence. These representations capture the contextual information of each token within the context of the entire sentence. 
 
-<img src="https://github.com/humzaashraf1/NLP-with-Antimicrobials/assets/121640997/57da8e73-5753-4b7f-b53b-101fd62c5ff6" alt="Transformer" width="400" height="400">  
+<img src="https://github.com/humzaashraf1/NLP-with-Antimicrobials/assets/121640997/57da8e73-5753-4b7f-b53b-101fd62c5ff6" alt="Transformer" width="450" height="400">  
 
 Graphic courtesey of StatQuest (https://statquest.org/)
 

@@ -131,10 +131,15 @@ I cloned the official GitHub repo (https://github.com/dauparas/ProteinMPNN) and 
 
 <img src="https://github.com/humzaashraf1/NLP-with-Antimicrobials/assets/121640997/0fad02b7-d368-4eb5-adca-fbef0f94f6f5" alt="AMP # 99" width="350" height="250">  
 
-| Sequence                                   | Origin    |
-|--------------------------------------------|-----------|
-| MGAIAKLVAKFGWPFIKKFYKQIMQFIGQGWTIDQIEKWLKRH | Parent    |
-| EEIIEKLIKKFGKEFVDKYKEEILKMIKEGKSLEEIEEWLKKK | Predicted |  
+| Sequence                                    | Prediction |
+|---------------------------------------------|------------|
+| MGAIAKLVAKFGWPFIKKFYKQIMQFIGQGWTIDQIEKWLKRH | Parent     |
+| EEIIEKLIKKFGKEFVDKYKEEILKMIKEGKSLEEIEEWLKKK | seed = 37  |
+| DEIIEKLIEKFGEEFVEKYKEEILEMIEEGKSLEEIEEWLKKK | seed = 44  |
+| DEIIEKLIKKFGKEFIEKYLEEILKMIKEGKSLEEIEEYLKKK| seed = 276 |
+| SEIIEKLIKKFGEKFVKKYLKEIEKMIKEGKSLEEIEEWLKKK| seed = 776 |
+| EEIIEKLIKKFGEKFVEKYKEEILKMIKEGKSLEEIEEWLKKK| seed = 72  |
+| EEIIKELIKKFGKEFVDKYKEEILKMIKEGKSLEEIEEYLKKK| seed = 938 |
 
 Suppose now we want to exclude Tyrosines and Tryptophans from our prediction. We simply add  --omit_AAs YW to our input arguments and run again (for clarity, I included a separate shell script in the repo):  
 
@@ -144,12 +149,17 @@ Suppose now we want to exclude Tyrosines and Tryptophans from our prediction. We
 | EEIIEKLIKKFGKEFVDKYKEEILKMIKEGKSLEEIEEWLKKK | Vanilla Prediction |
 | EKIIEKLIKKFGKKFVEKFKEEIEKMIKEGKSLEEIEEELKKK | Updated Prediction  |  
 
-Finally, consider the scenario where we aim to incorporate specific biases for each amino acid within the sequence. Such an approach becomes valuable when leveraging high-throughput screening data. For instance, suppose we randomly induce mutations in a parent sequence possessing essential 3-D structural characteristics, followed by downstream activity assays. In this context, we can utilize per-residue probability distributions derived from experimental data to craft structures that not only retain the parent's shape but also sustain their functional activity. To perform this with ProteinMPNN, we simply add --bias_by_res_jsonl /path/to/jsonl to our input arguments and run again on the same pdb file. I created a "mock" .jsonl file using random distributions for each residue with generate_bias_by_residue.py in <ins>**ProteinMPNN_AMPs**</ins>.  
+Consider the scenario where we aim to incorporate specific biases for each amino acid within the sequence. Such an approach becomes valuable when leveraging high-throughput screening data. For instance, suppose we randomly induce mutations in a parent sequence possessing essential 3-D structural characteristics, followed by downstream activity assays. In this context, we can utilize per-residue probability distributions derived from experimental data to craft structures that not only retain the parent's shape but also sustain their functional activity. To perform this with ProteinMPNN, we simply add --bias_by_res_jsonl /path/to/jsonl to our input arguments and run again on the same pdb file. I created a "mock" .jsonl file using random distributions for each residue with generate_bias_by_residue.py in <ins>**ProteinMPNN_AMPs**</ins>.  
 
 | Sequence                                   | Prediction         |
 |--------------------------------------------|--------------------|
 | MGAIAKLVAKFGWPFIKKFYKQIMQFIGQGWTIDQIEKWLKRH | Parent             |
 | EEIIEKLIKKFGKEFVDKYKEEILKMIKEGKSLEEIEEWLKKK | Vanilla Prediction |
-| EQVLEKLIQKFGKEFVDKYISEINALIKEGYSIEQIEKKLEKL | Updated Prediction |
+| EQVLEKLIQKFGKEFVDKYISEINALIKEGYSIEQIEKKLEKL | Updated Prediction |  
+
+### Cross Checking ProteinMPNN with AlphaFold-3  
+One way to validate our structure prediction is to cross check with AlphaFold. Since AlphaFold-3 is now available for non-commercial use (https://golgi.sandbox.google.com/about), I simply pasted the same sequence into their server to generate a structure:  
+
+<img src="https://github.com/humzaashraf1/NLP-with-Antimicrobials/assets/121640997/126f588b-a441-4933-b78b-065a66bebaad" alt="AlphaFold" width="550" height="250">  
  
 <sub> Portions of code in this repository were generated with the assistance of ChatGPT, a LLM developed by OpenAI.</sub>

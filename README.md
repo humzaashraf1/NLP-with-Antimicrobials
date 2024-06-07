@@ -158,7 +158,7 @@ Consider the scenario where we aim to incorporate specific biases for each amino
 | EQVLEKLIQKFGKEFVDKYISEINALIKEGYSIEQIEKKLEKL | Updated Prediction |  
 
 ### Cross Checking ProteinMPNN with AlphaFold-3  
-One way to validate our structure prediction is to cross check with AlphaFold. Since AlphaFold-3 is now available for non-commercial use (https://golgi.sandbox.google.com/about), I simply pasted the same sequence into their server to generate a structure:  
+Using the new sequence we generated with random distributions for per-residue biases, we can visualize the prediction with AlphaFold-3 (https://golgi.sandbox.google.com/about):  
 
 <img src="https://github.com/humzaashraf1/NLP-with-Antimicrobials/assets/121640997/126f588b-a441-4933-b78b-065a66bebaad" alt="AlphaFold" width="550" height="250">  
  

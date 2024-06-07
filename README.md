@@ -37,7 +37,7 @@ Ground truth: [0 1], where the left-side class is AMP and the right-side class i
 BERT is a powerful natural language processing (NLP) model introduced by researchers at Google in 2018. BERT is based on the Transformer architecture, which relies on self-attention mechanisms to capture the relationship between words in a sentence. This architecture allows BERT to process and understand context from both directions. BERT randomly masks some of the words in the input sentence and trains the model to predict the masked words based on the context provided by the surrounding words. After pretraining, BERT can be fine-tuned on downstream NLP tasks with labeled data. In this example, we will fine-tune a pre-trained BERT model tha tis publically available for sequence classification (https://huggingface.co/Rostlab/prot_bert). The pre-trained model, also called ProtTrans, was trained on nearly 400 billion amino acids from UniRef and BFD (see the publication: doi: https://doi.org/10.1101/2020.07.12.199554).
 
 ### How Transformers are used in BERT  
-**Self-Attention Mechanism**: The core component of transformers is the self-attention mechanism, which allows the model to weigh the importance of each word in a sentence based on its relevance to other words. This mechanism enables the model to capture long-range dependencies and understand the contextual relationships between words.  
+**Self-Attention Mechanism**: The core component of transformers is the self-attention mechanism, which allows the model to weigh the importance of each word in a sentence based on its relevance to other words. This mechanism enables the model to capture long-range dependencies and understand the contextual relationships between words.   
 
 **Input Representation**: BERT tokenizes input text into subword units using WordPiece tokenization. Each token is then represented as an embedding vector, which is the input to the transformer.  
 
@@ -62,7 +62,7 @@ The predicted label for the sequence is: non-AMP
 Ground truth: [0 1], where the left-side class is AMP and the right-side class is non-AMPs.
 
 ### Visualizing BERT Embeddings with t-Distributed Stochastic Neighbor Embedding (t-SNE)  
-t-SNE is a dimensionality reduction technique that allows n-dimensional vectors to be projected down into 2-dimensional space based on relative similarity in high-dimensional space. Since BERT essentially produces high dimensional embedding vectors, we can visualize "similarity" between peptide sequences by comparing the relative distances between data points in the projected space.    
+t-SNE is a dimensionality reduction technique that allows n-dimensional vectors to be projected down into 2-dimensional space based on relative similarity in high-dimensional space. Since BERT essentially produces high dimensional embedding vectors, we can visualize "similarity" between peptide sequences by comparing the relative distances between data points in the projected space. To achieve this, we simply pass our tokenized sequences to the model in small batches and then compute the mean of the entire tokenized sequence (using "outputs.last_hidden_state.mean(dim=1)") in the last hidden layer instead of proceeding to the final fully-connected layer (see visualize_embeddings.py).    
 
 **BERT Before Fine Tuning**  
 <img src="https://github.com/humzaashraf1/NLP-with-Antimicrobials/assets/121640997/c7f4333c-4dfa-4c5e-a45f-c8d5e0c75b2f" alt="tSNE Before Fine Tuning" width="400" height="300">  
@@ -70,5 +70,19 @@ t-SNE is a dimensionality reduction technique that allows n-dimensional vectors 
 <img src="https://github.com/humzaashraf1/NLP-with-Antimicrobials/assets/121640997/975fdda8-1662-49fc-b062-9c1e36c4c0fc" alt="tSNE Before Fine Tuning" width="400" height="300">  
 As can be seen in the above scatter plots, fine tuning the pre-trained model increased the separation between embeddings in both the training and testing sets, suggesting our training was successful!
 
+## Folding Peptides with Evolutionary-Scale-Modeling-Fold (ESM-Fold) 
+ESM-Fold, developed by researchers at Meta in 2022, is a protein folding model that stands out from its Google counterpart AlphaFold by not relying on multiple sequence alignments for its predictions. This approach allows ESM-Fold to efficiently fold hundreds to thousands of protein sequences without compromising accuracy. The model's remarkable performance is driven by ESM-2, a large language model similar to BERT, with approximately 15 billion parameters. At this scale, ESM-2's attention scores effectively correlate with contact maps between protein residues, thereby enabling accurate structure prediction purely from masked-language training (https://www.science.org/doi/abs/10.1126/science.ade2574).   
 
+## Generative Protein Design with a Message-Passing-Neural-Network (ProteinMPNN)  
+ProteinMPNN is a deep learning model designed to generate protein sequences that fold into specific three-dimensional structures. The model uses an attention-based message-passing mechanism, where proteins are represented as graphs, with nodes corresponding to amino acid residues and edges representing bonds between residues. In this type of network, nodes exchange information with their neighbors through edges in an iterative process called message passing. During each iteration, nodes update their states based on the information received from their neighboring nodes. The attention mechanism enhances the message passing by assigning different weights to the incoming messages from neighboring nodes. This allows the network to focus on more relevant neighbors when updating each node's representation. For a more detailed description, you can watch this excellent YouTube video by DeepFindr (https://www.youtube.com/watch?v=A-yKQamf2Fc).  
+ ![image](https://github.com/humzaashraf1/NLP-with-Antimicrobials/assets/121640997/31334d79-4052-4f79-8e27-0aef348c7251)  
+ (Graphic courtesey of DeepFindr).  
+
+### Constraints on Sequence Generation with ProteinMPNN  
+When passing an amino-acid sequence to ProteinMPNN, the model generates a new protein that folds into the same 3D shape. For further customizability, there are several optional input arguments that constrain the output sequence. Here are three interesting constraints to consider from the argparser:
+
+1) AA composition bias (E.g., make certain residues more or less likely to occur).
+2) Bias by residue (E.g., positional biases that make certain residues more or less likely at specific positions in the sequence).
+3) Omit AA bias (E.g., eliminate certain residues altogether in the designed chain).
+ 
 <sub> Portions of code in this repository were generated with the assistance of ChatGPT, a LLM developed by OpenAI.</sub>

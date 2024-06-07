@@ -108,10 +108,12 @@ The structure predicted was color-coded based on the per-residue pLDDT score, wh
 
 ### Cross Checking ESM-Fold with AlphaFold-3  
 One way to validate our structure prediction is to cross check with AlphaFold. Since AlphaFold-3 is now available for non-commercial use (https://golgi.sandbox.google.com/about), I simply pasted the same sequence into their server to generate a structure:  
+
 <img src="https://github.com/humzaashraf1/NLP-with-Antimicrobials/assets/121640997/16f78351-2607-4406-aa63-1c024eeb5cc1" alt="AlphaFold" width="550" height="250">  
 
 ## Generative Protein Design with a Message-Passing-Neural-Network (ProteinMPNN)  
 ProteinMPNN is a deep learning model designed to generate protein sequences that fold into specific three-dimensional structures. The model uses an attention-based message-passing mechanism, where proteins are represented as graphs, with nodes corresponding to amino acid residues and edges representing bonds between residues. In this type of network, nodes exchange information with their neighbors through edges in an iterative process called message passing. During each iteration, nodes update their states based on the information received from their neighboring nodes. The attention mechanism enhances the message passing by assigning different weights to the incoming messages from neighboring nodes. This allows the network to focus on more relevant neighbors when updating each node's representation. For a more detailed description, you can watch this excellent YouTube video by DeepFindr (https://www.youtube.com/watch?v=A-yKQamf2Fc).  
+
  ![image](https://github.com/humzaashraf1/NLP-with-Antimicrobials/assets/121640997/31334d79-4052-4f79-8e27-0aef348c7251)  
  (Graphic courtesey of DeepFindr).  
 
@@ -125,6 +127,29 @@ When passing an amino-acid sequence to ProteinMPNN, the model generates a new pr
 The encoder uses unmasked self-attention, while the decoder uses masked self-attention (thus the generation of each residue is auto-regressive--where it occurs sequentially from left to right). For each residue, the amino acid with the highest probability is selected. Probabilities for all the amino acids add up to 1.0 because the output logits are run through a softmax function (softmax(z)<sub>i</sub> = e<sup>z<sub>i</sub></sup> / ∑<sub>j</sub>e<sup>z<sub>j</sub></sup>). The optional inputs essentially just modify the probabilities for each residue during sequence generation: probs = F.softmax((temperature * logits - OmitBias * 10^8 + CompBias + temperature * ResidueBias) / temperature). Thus, we can restrict the model to generate sequences from either rational design or experimentally derived insights. 
 
 ### Running ProteinMPNN  
-I cloned the official GitHub repo (https://github.com/dauparas/ProteinMPNN) and created a bash script to call on "protein_mpnn_run.py". In this case, we will use the same AMP from the ESM-Fold example: MGAIAKLVAKFGWPFIKKFYKQIMQFIGQGWTIDQIEKWLKRH. I generated the corresponding .pdb file from ESM-Fold and named it AMP_99. To get started, we only need to pass the following input arguments to the command line: --model_name --path_to_model_weights --out_folder --pdb_path. I additionally included --seed 37, since the authors of the paper seem to always use that in their examples (if no seed argument is given, a random seed is chosen).
+I cloned the official GitHub repo (https://github.com/dauparas/ProteinMPNN) and created a bash script to call on "protein_mpnn_run.py". In this case, we will use the same AMP from the ESM-Fold example: MGAIAKLVAKFGWPFIKKFYKQIMQFIGQGWTIDQIEKWLKRH. I generated the corresponding .pdb file from ESM-Fold and named it AMP_99. To get started, we only need to pass the following input arguments to the command line: --model_name --path_to_model_weights --out_folder --pdb_path. I additionally included --seed 37, since the authors of the paper seem to always use that in their examples (if no seed argument is given, a random seed is chosen). The code generates: EEIIEKLIKKFGKEFVDKYKEEILKMIKEGKSLEEIEEWLKKK. Despite the fact that the two sequences are biochemically distinct, they fold into the same 3D shape. Here are both structures overlaid (predicted with AlphaFold-2):  
+
+<img src="https://github.com/humzaashraf1/NLP-with-Antimicrobials/assets/121640997/0fad02b7-d368-4eb5-adca-fbef0f94f6f5" alt="AMP # 99" width="350" height="250">  
+
+| Sequence                                   | Origin    |
+|--------------------------------------------|-----------|
+| MGAIAKLVAKFGWPFIKKFYKQIMQFIGQGWTIDQIEKWLKRH | Parent    |
+| EEIIEKLIKKFGKEFVDKYKEEILKMIKEGKSLEEIEEWLKKK | Predicted |  
+
+Suppose now we want to exclude Tyrosines and Tryptophans from our prediction. We simply add  --omit_AAs YW to our input arguments and run again (for clarity, I included a separate shell script in the repo):  
+
+| Sequence                                   | Prediction         |
+|--------------------------------------------|--------------------|
+| MGAIAKLVAKFGWPFIKKFYKQIMQFIGQGWTIDQIEKWLKRH | Parent             |
+| EEIIEKLIKKFGKEFVDKYKEEILKMIKEGKSLEEIEEWLKKK | Vanilla Prediction |
+| EKIIEKLIKKFGKKFVEKFKEEIEKMIKEGKSLEEIEEELKKK | Updated Prediction  |  
+
+Finally, consider the scenario where we aim to incorporate specific biases for each amino acid within the sequence. Such an approach becomes valuable when leveraging high-throughput screening data. For instance, suppose we randomly induce mutations in a parent sequence possessing essential 3-D structural characteristics, followed by downstream activity assays. In this context, we can utilize per-residue probability distributions derived from experimental data to craft structures that not only retain the parent's shape but also sustain their functional activity. To perform this with ProteinMPNN, we simply add --bias_by_res_jsonl /path/to/jsonl to our input arguments and run again on the same pdb file. I created a "mock" .jsonl file using random distributions for each residue with generate_bias_by_residue.py in <ins>**ProteinMPNN_AMPs**</ins>.  
+
+| Sequence                                   | Prediction         |
+|--------------------------------------------|--------------------|
+| MGAIAKLVAKFGWPFIKKFYKQIMQFIGQGWTIDQIEKWLKRH | Parent             |
+| EEIIEKLIKKFGKEFVDKYKEEILKMIKEGKSLEEIEEWLKKK | Vanilla Prediction |
+| EQVLEKLIQKFGKEFVDKYISEINALIKEGYSIEQIEKKLEKL | Updated Prediction |
  
 <sub> Portions of code in this repository were generated with the assistance of ChatGPT, a LLM developed by OpenAI.</sub>

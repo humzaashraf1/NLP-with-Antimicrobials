@@ -85,9 +85,6 @@ When passing an amino-acid sequence to ProteinMPNN, the model generates a new pr
 2) Bias by residue (E.g., positional biases that make certain residues more or less likely at specific positions in the sequence).
 3) Omit AA bias (E.g., eliminate certain residues altogether in the designed chain).
 
-The encoder uses unmasked self-attention, while the decoder uses masked self-attention (thus the generation of each residue is auto-regressive--where it occurs sequentially from left to right). For each residue, the amino-acid with the highest probability is selected. Probabilities for all the amino-acids add up to 1.0 because the output logits are run through a softmax function (softmax(z)<sub>i</sub> = e<sup>z<sub>i</sub></sup> / ∑<sub>j</sub>e<sup>z<sub>j</sub></sup>). The optional inputs essentially just modify the probabilities for each residue during sequence generation: probs = F.softmax((temperature * logits - OmitBias * 10^8 + CompBias + temperature * ResidueBias) / temperature).
-
-
-
+The encoder uses unmasked self-attention, while the decoder uses masked self-attention (thus the generation of each residue is auto-regressive--where it occurs sequentially from left to right). For each residue, the amino acid with the highest probability is selected. Probabilities for all the amino acids add up to 1.0 because the output logits are run through a softmax function (softmax(z)<sub>i</sub> = e<sup>z<sub>i</sub></sup> / ∑<sub>j</sub>e<sup>z<sub>j</sub></sup>). The optional inputs essentially just modify the probabilities for each residue during sequence generation: probs = F.softmax((temperature * logits - OmitBias * 10^8 + CompBias + temperature * ResidueBias) / temperature). Thus, we can restrict the model to generate sequences from either rational design or experimentally derived insights. 
  
 <sub> Portions of code in this repository were generated with the assistance of ChatGPT, a LLM developed by OpenAI.</sub>

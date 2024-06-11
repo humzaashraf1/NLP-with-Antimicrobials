@@ -162,7 +162,7 @@ Using the new sequence we generated with random distributions for per-residue bi
 
 <img src="https://github.com/humzaashraf1/NLP-with-Antimicrobials/assets/121640997/126f588b-a441-4933-b78b-065a66bebaad" alt="AlphaFold" width="550" height="250">  
 
-## Peptide Generation with a Generative Pre-trained Transformer (GPT)  
+## Peptide Backbone Generation with RfDiffusion  
 **Coming soon...**
  
 <sub> Portions of code in this repository were generated with the assistance of ChatGPT, a LLM developed by OpenAI.</sub>

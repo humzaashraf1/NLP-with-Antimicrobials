@@ -70,6 +70,12 @@ t-SNE is a dimensionality reduction technique that allows n-dimensional vectors 
 <img src="https://github.com/humzaashraf1/NLP-with-Antimicrobials/assets/121640997/975fdda8-1662-49fc-b062-9c1e36c4c0fc" alt="tSNE Before Fine Tuning" width="400" height="300">  
 As can be seen in the above scatter plots, fine tuning the pre-trained model increased the separation between embeddings in both the training and testing sets, suggesting our training was successful!
 
+### SHAP(SHapley Additive exPlanations) to Explain Model Outputs
+SHAP (SHapley Additive exPlanations) is a popular tool for interpreting machine learning model outputs, including complex models like BERT (Bidirectional Encoder Representations from Transformers). When applied to BERT, SHAP helps explain how individual tokens (or features) contribute to the model's predictions by assigning a Shapley value to each input. This value reflects the importance of the token in the prediction process. For binary classification tasks, where samples are categorized as 1s (positive) or 0s (negative), SHAP can show which words or phrases drive the model's decision toward either class. This insight is particularly useful for understanding and validating model behavior in tasks such as sentiment analysis or text classification.
+
+![SHAPE](https://github.com/user-attachments/assets/33ee06f9-dd5a-4ce3-84a1-87fdd308550f)
+
+
 ## Folding Peptides with Evolutionary-Scale-Modeling-Fold (ESM-Fold) 
 ESM-Fold, developed by researchers at Meta in 2022, is a protein folding model that stands out from its Google counterpart AlphaFold by not relying on multiple sequence alignments for its predictions. This approach allows ESM-Fold to efficiently fold hundreds to thousands of protein sequences without compromising accuracy. The model's remarkable performance is driven by ESM-2, a large language model similar to BERT, with approximately 15 billion parameters. At this scale, ESM-2's attention scores effectively correlate with contact maps between protein residues, thereby enabling accurate structure prediction purely from masked-language training (https://www.science.org/doi/abs/10.1126/science.ade2574).   
 
@@ -161,8 +167,5 @@ Consider the scenario where we aim to incorporate specific biases for each amino
 Using the new sequence we generated with random distributions for per-residue biases, we can visualize the prediction with AlphaFold-3 (https://golgi.sandbox.google.com/about):  
 
 <img src="https://github.com/humzaashraf1/NLP-with-Antimicrobials/assets/121640997/126f588b-a441-4933-b78b-065a66bebaad" alt="AlphaFold" width="550" height="250">  
-
-## Peptide Backbone Generation with RfDiffusion  
-**Coming soon...**
  
 <sub> Portions of code in this repository were generated with the assistance of ChatGPT, a LLM developed by OpenAI.</sub>
